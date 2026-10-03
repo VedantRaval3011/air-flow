@@ -55,8 +55,9 @@ function SupplyDiffuser({ diffuser }: { diffuser: ISupplyDiffuser }) {
     const ref = useRef<THREE.Mesh>(null);
 
     useFrame((state) => {
-        if (ref.current) {
-            ref.current.material.opacity = 0.7 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
+        const material = ref.current?.material;
+        if (material && !Array.isArray(material)) {
+            material.opacity = 0.7 + Math.sin(state.clock.elapsedTime * 2) * 0.3;
         }
     });
 

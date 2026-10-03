@@ -1,0 +1,27 @@
+{
+  "engine": "builtin",
+  "grid": {
+    "nx": 50,
+    "ny": 40,
+    "nz": 15,
+    "cells": 30000,
+    "hx": 0.2,
+    "hy": 0.2,
+    "hz": 0.2
+  },
+  "cellCounts": {
+    "fluid": 29666,
+    "solid": 320,
+    "inlet": 12,
+    "outlet": 2
+  },
+  "supplyFlowM3s": 6.33345,
+  "achAchieved": 95,
+  "solver": {
+    "steps": 60,
+    "residual": 0.0018614211215374637,
+    "converged": true,
+    "dt": 0.006315672344916483,
+    "effectiveViscosity": 0.005695606494795239
+  }
+}

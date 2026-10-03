@@ -103,13 +103,24 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Check if there's a running simulation with this hash
+    // Check if there's a running simulation with this hash. A record left
+    // in-progress by a crashed or restarted server would otherwise block this
+    // configuration forever, so anything older than the stale window is
+    // retired and the simulation is started again.
     const runningSimulation = await Simulation.findOne({
       configHash,
       status: { $in: ['pending', 'meshing', 'running', 'postprocessing'] },
     });
-    
-    if (runningSimulation) {
+
+    if (runningSimulation && isStale(runningSimulation)) {
+      await Simulation.findByIdAndUpdate(runningSimulation._id, {
+        status: 'failed',
+        progress: 0,
+        statusMessage: undefined,
+        error: 'Simulation was interrupted before it finished (stale run retired).',
+        completedAt: new Date(),
+      });
+    } else if (runningSimulation) {
       const response: SimulationTriggerResponse = {
         simulationId: runningSimulation._id.toString(),
         reused: true,
@@ -123,15 +134,20 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Create new configuration
-    const configuration = await Configuration.create({
-      roomId: body.roomId,
-      configHash,
-      supplyDiffusers: diffusersWithVelocity,
-      returnGrills: grillsWithIds,
-      obstructions: obstructionsWithIds,
-      airflowParams: body.airflowParams,
-    });
+    // Reuse the configuration document if this exact setup has been submitted
+    // before (configHash is unique). Without this, re-running a configuration
+    // whose earlier simulation failed would be rejected as a duplicate key and
+    // the user could never retry it.
+    const configuration =
+      (await Configuration.findOne({ configHash })) ??
+      (await Configuration.create({
+        roomId: body.roomId,
+        configHash,
+        supplyDiffusers: diffusersWithVelocity,
+        returnGrills: grillsWithIds,
+        obstructions: obstructionsWithIds,
+        airflowParams: body.airflowParams,
+      }));
     
     // Create new simulation record
     const simulation = await Simulation.create({
@@ -212,6 +228,17 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/** How long an in-progress simulation may go without an update before it is
+ * considered abandoned. The solver reports progress every few seconds, so a
+ * live run refreshes `updatedAt` well inside this window. */
+const STALE_AFTER_MS = 10 * 60 * 1000;
+
+function isStale(simulation: { updatedAt?: Date; createdAt?: Date }): boolean {
+  const lastTouched = simulation.updatedAt ?? simulation.createdAt;
+  if (!lastTouched) return true;
+  return Date.now() - new Date(lastTouched).getTime() > STALE_AFTER_MS;
 }
 
 /**

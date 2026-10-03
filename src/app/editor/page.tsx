@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -14,7 +14,23 @@ import {
 } from '@/types';
 import RoomPreview3D from '@/components/editor/RoomPreview3D';
 
+// useSearchParams needs a Suspense boundary above it, otherwise prerendering
+// /editor fails at build time.
 export default function EditorPage() {
+    return (
+        <Suspense
+            fallback={
+                <div className="min-h-screen bg-slate-900 flex items-center justify-center text-slate-300">
+                    Loading editor...
+                </div>
+            }
+        >
+            <Editor />
+        </Suspense>
+    );
+}
+
+function Editor() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const roomId = searchParams.get('roomId');

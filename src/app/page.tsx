@@ -58,12 +58,20 @@ export default function HomePage() {
                 <p className="text-xs text-slate-400">Pharma Cleanroom Simulation</p>
               </div>
             </div>
-            <Link
-              href="/editor"
-              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg font-medium hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25"
-            >
-              + New Simulation
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/facility"
+                className="px-4 py-2 bg-slate-800 border border-slate-700 text-white rounded-lg font-medium hover:bg-slate-700 transition-all"
+              >
+                Facility 3D &amp; pressures
+              </Link>
+              <Link
+                href="/editor"
+                className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg font-medium hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25"
+              >
+                + New Simulation
+              </Link>
+            </div>
           </div>
         </div>
       </header>

@@ -138,10 +138,16 @@ function AnimatedParticles({ streamlines }: { streamlines: IStreamline[] }) {
         const pos: number[] = [];
         const indices: number[] = [];
 
+        const particlesPerLine = 5;
+
         streamlines.forEach((sl, slIdx) => {
-            // Add a few particles per streamline
-            for (let i = 0; i < 5; i++) {
-                const pointIdx = Math.floor(Math.random() * sl.points.length);
+            // Space the particles evenly along the line. This is deterministic
+            // on purpose: a random offset here would reshuffle every render.
+            for (let i = 0; i < particlesPerLine; i++) {
+                const pointIdx = Math.min(
+                    sl.points.length - 1,
+                    Math.floor((i / particlesPerLine) * sl.points.length)
+                );
                 const point = sl.points[pointIdx];
                 pos.push(point.x, point.z, point.y);
                 indices.push(slIdx);
@@ -181,6 +187,7 @@ function AnimatedParticles({ streamlines }: { streamlines: IStreamline[] }) {
             <bufferGeometry>
                 <bufferAttribute
                     attach="attributes-position"
+                    args={[positions, 3]}
                     count={positions.length / 3}
                     array={positions}
                     itemSize={3}

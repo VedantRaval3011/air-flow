@@ -1,0 +1,86 @@
+solid obstruction_0
+  facet normal 0.000000 0.000000 -1.000000
+    outer loop
+      vertex 2.300000 1.550000 0.000000
+      vertex 3.700000 2.450000 0.000000
+      vertex 3.700000 1.550000 0.000000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 -1.000000
+    outer loop
+      vertex 2.300000 1.550000 0.000000
+      vertex 2.300000 2.450000 0.000000
+      vertex 3.700000 2.450000 0.000000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 1.000000
+    outer loop
+      vertex 2.300000 1.550000 1.200000
+      vertex 3.700000 1.550000 1.200000
+      vertex 3.700000 2.450000 1.200000
+    endloop
+  endfacet
+  facet normal 0.000000 0.000000 1.000000
+    outer loop
+      vertex 2.300000 1.550000 1.200000
+      vertex 3.700000 2.450000 1.200000
+      vertex 2.300000 2.450000 1.200000
+    endloop
+  endfacet
+  facet normal 0.000000 -1.000000 0.000000
+    outer loop
+      vertex 2.300000 1.550000 0.000000
+      vertex 3.700000 1.550000 0.000000
+      vertex 3.700000 1.550000 1.200000
+    endloop
+  endfacet
+  facet normal 0.000000 -1.000000 0.000000
+    outer loop
+      vertex 2.300000 1.550000 0.000000
+      vertex 3.700000 1.550000 1.200000
+      vertex 2.300000 1.550000 1.200000
+    endloop
+  endfacet
+  facet normal 0.000000 1.000000 0.000000
+    outer loop
+      vertex 3.700000 2.450000 0.000000
+      vertex 2.300000 2.450000 0.000000
+      vertex 2.300000 2.450000 1.200000
+    endloop
+  endfacet
+  facet normal 0.000000 1.000000 0.000000
+    outer loop
+      vertex 3.700000 2.450000 0.000000
+      vertex 2.300000 2.450000 1.200000
+      vertex 3.700000 2.450000 1.200000
+    endloop
+  endfacet
+  facet normal -1.000000 0.000000 0.000000
+    outer loop
+      vertex 2.300000 1.550000 0.000000
+      vertex 2.300000 1.550000 1.200000
+      vertex 2.300000 2.450000 1.200000
+    endloop
+  endfacet
+  facet normal -1.000000 0.000000 0.000000
+    outer loop
+      vertex 2.300000 1.550000 0.000000
+      vertex 2.300000 2.450000 1.200000
+      vertex 2.300000 2.450000 0.000000
+    endloop
+  endfacet
+  facet normal 1.000000 0.000000 0.000000
+    outer loop
+      vertex 3.700000 1.550000 0.000000
+      vertex 3.700000 2.450000 0.000000
+      vertex 3.700000 2.450000 1.200000
+    endloop
+  endfacet
+  facet normal 1.000000 0.000000 0.000000
+    outer loop
+      vertex 3.700000 1.550000 0.000000
+      vertex 3.700000 2.450000 1.200000
+      vertex 3.700000 1.550000 1.200000
+    endloop
+  endfacet
+endsolid obstruction_0

@@ -1,0 +1,45 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  10                                    |
+|   \\  /    A nd           | Website:  www.openfoam.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+castellatedMesh true;
+snap true;
+addLayers false;
+
+geometry { 
+        obstruction_0.stl { type triSurfaceMesh; name obstruction_0; }
+        obstruction_1.stl { type triSurfaceMesh; name obstruction_1; }
+        obstruction_2.stl { type triSurfaceMesh; name obstruction_2; } }
+
+castellatedMeshControls
+{
+    maxLocalCells 100000;
+    maxGlobalCells 2000000;
+    minRefinementCells 10;
+    nCellsBetweenLevels 3;
+    features ();
+    refinementSurfaces { 
+            obstruction_0 { level (2 3); }
+            obstruction_1 { level (2 3); }
+            obstruction_2 { level (2 3); } }
+    resolveFeatureAngle 30;
+    refinementRegions {}
+    locationInMesh (5 4 1.5);
+    allowFreeStandingZoneFaces true;
+}
+
+snapControls { nSmoothPatch 3; tolerance 2.0; nSolveIter 30; nRelaxIter 5; }
+addLayersControls { relativeSizes true; layers {} expansionRatio 1.0; finalLayerThickness 0.3; minThickness 0.1; }
+meshQualityControls { maxNonOrtho 65; maxBoundarySkewness 20; maxConcave 80; minVol 1e-13; }
+mergeTolerance 1e-6;
